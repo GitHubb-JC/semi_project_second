@@ -1,0 +1,329 @@
+/* 카테고리 */
+.main-category {
+    display: flex;
+    justify-content: space-evenly;
+    text-align: center;
+    font-size: 0.7rem;
+    margin: 0px 50px 0 50px;
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+.main-category p {
+    padding-top: 10px;
+    margin-bottom: 0;
+}
+
+.main-category a {
+    display: inline-block;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 13px;
+    color: black;
+}
+
+.main-category-bg {
+    width: 8rem;
+    /* height: 8rem;
+    border-radius: 50%;
+    border: 3px solid rgb(205, 205, 255);  */
+    background: white;
+}
+
+.main-category-img {
+    padding-top: 28px;
+    width: 75%;
+    height: 75%;
+}
+/* 카테고리 종료 */
+
+/* 브랜드 카테고리 */
+.brand-category {
+    display: flex;
+    justify-content: center;
+    vertical-align: bottom;
+    margin: 10px;
+}
+
+.brand-category-logo {
+    background-color: white;
+    color: black;
+    font-weight: 450;
+    width: 6rem;
+    height: 2rem;
+    border-radius: 1.5rem;
+    font-size: 1rem;
+    text-align: center;
+    margin: 20px 10px 20px;
+    border: 1px solid rgb(205, 205, 255);
+}
+
+.fill:hover {
+    color: rgb(147, 112, 219);
+    background-color: rgb(205, 205, 255);
+}
+
+.brand-category-logo img {
+    width: 100%;
+    height: 100%;
+}
+
+/* 베스트랭킹 */
+.best-ranking-box {
+    overflow: hidden;
+    display: flex;
+    margin-bottom: 5rem;
+    margin-top: 3rem;
+    min-width: 100%;
+}
+
+.best-ranking {
+    height: 450px;
+    min-width: 18%;
+    background-color: rgb(205, 205, 255);
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+
+    border: 5px solid rgb(205, 205, 255);
+}
+
+.best-ranking h3 {
+    color: white;
+    margin: 20px 0 0 10px;
+    font-size: 25px;
+    font-weight: 700;
+    padding-top: 15px;
+    background-color: transparent;
+}
+
+.best-ranking img {
+    width: 100px;
+    height: 100px;
+}
+
+.best-ten {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    background-color: white;
+    margin: 10px;
+    padding: 20px 10px 10px 10px;
+    border-radius: 0.5rem;
+    font-size: 0.8rem;
+    height: 100%;
+}
+
+.now {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    margin-bottom: 10px;
+}
+
+.best-ten a {
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+    margin: 2px 6px 2px;
+}
+
+.best-ranking-products {
+    display: flex;
+    margin-left: 13px;
+    width: 300vw;
+    height: 100%;
+}
+
+.best-ten-product {
+    margin-left: 13px;
+    height: 100%;
+    max-width: 23%;
+}
+
+.best-ten-product .card-body {
+    border: 5px solid rgb(205, 205, 255);
+    border-radius: 15px;
+    background-color: #f7f7f7;
+    height: 100%;
+    padding: 0;
+}
+
+/* .container-main {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+    flex-wrap: wrap;
+} */
+
+.md-pick {
+    text-align: center;
+    background: #a4c3fa;
+    border-radius: 10px;
+    margin-top: 20px;
+    height: 100px;
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.md-pick h3 {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-weight: 700;
+    color: white;
+}
+
+.slide-container {
+    width: 300vw;
+    height: 700px;
+    transition: all 1s;
+}
+
+.slide-box {
+    width: 100vw;
+    height: 100%;
+    float: left;
+}
+
+.slide-box img {
+    width: 100%;
+    height: 100%;
+}
+
+.hide {
+    display: none;
+}
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.card-title {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    padding: 0 50px 0 50px;
+
+}
+
+.card-bodys {
+    margin: 0;
+    background-color: #f7f7f7;
+    border-radius: 1.5rem;
+    height: 100%;
+    margin-right: 5px;
+}
+
+.has_rank {
+    position: relative;
+}
+
+.best-ranking-tag {
+    width: 36px;
+    height: 33px;
+    border-radius: 10px 0 10px 0;
+    font-size: 11px;
+    font-weight: bold;
+    color: white;
+    background-color: skyblue;
+    text-transform: uppercase;
+    white-space: normal;
+    text-align: center;
+    box-sizing: border-box;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    padding: 2px;
+    font-family: sans-serif;
+    line-height: 1.1;
+}
+
+.blind-container {
+    text-align: center;
+    padding: 10px;
+    padding-top: 50px;
+    position: relative;
+}
+
+.blind-container-down {
+    height: 260px;
+    max-width: 250px;
+}
+
+.img-blind {
+    position: absolute;
+    background-color: #f7f7f7;
+    bottom: 35%;
+    width: 94%;
+    height: 20%;
+    z-index: 5;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    line-height: 1.5rem;
+    padding:0 20px 10px 20px;
+
+}
+
+.img-blind-without {
+    position: relative;
+    background-color: #f7f7f7;
+    width: 90%;
+    height: 12%;
+}
+
+.img-blind h5 {
+    padding-top: 30px;
+}
+
+.what-to-do {
+    z-index: 7;
+    padding: 0 5px 0 5px;
+}
+
+.inner {
+    position: relative;
+    width: 100%;
+}
+
+.hit-product {
+    width: 23%;
+    margin-bottom: 1rem;
+}
+
+.btn-color {
+    background-color: rgb(205, 205, 255);
+    text-decoration: none;
+    font-size: 1rem;
+    color: rgb(147, 112, 219);
+    border-radius: 1.5rem;
+    text-align: center;
+    padding: 10px 30px;
+    border-style: none;
+    justify-content: center;
+    margin: auto;
+}
+
+.sale-price {
+    font-size: 17px;
+    padding: 0 10px 0 10px;
+}
+
+.md-pick {
+    background-color: rgb(147, 112, 219);
+}
+
+.region_img {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    width: 264.08px;
+    height: 154px;
+}

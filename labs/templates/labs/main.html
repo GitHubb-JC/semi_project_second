@@ -1,0 +1,420 @@
+{% extends 'base1.html' %}
+{% load django_bootstrap5 %}
+{% load humanize %}
+{% load static %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static 'labs/css/main.css' %}">
+{% endblock css %}
+
+<!-- 타임특가 정보 <div id="timesale" class="alert alert-danger">5초 이내 구매시 사은품 증정!</div> <div style="overflow: hidden;"></div> -->
+
+<!-- 캐러셀 -->
+{% block carousel %}
+  <div class="container mb-4">
+    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active" data-bs-interval="3000">
+          <img src="{% static 'labs/img/banner4.png' %}" class="d-block w-100" alt="..." draggable="false">
+        </div>
+        <div class="carousel-item" data-bs-interval="3000">
+          <img src="{% static 'labs/img/banner5.png' %}" class="d-block w-100" alt="..." draggable="false">
+        </div>
+        <div class="carousel-item" data-bs-interval="3000">
+          <img src="{% static 'labs/img/final.png' %}" class="d-block w-100" alt="..." draggable="false">
+        </div>
+        <div class="carousel-item" data-bs-interval="3000">
+          <img src="{% static 'labs/img/keyboard.png' %}" class="d-block w-100" alt="..." draggable="false">
+        </div>
+        <div class="carousel-item" data-bs-interval="3000">
+          <img src="{% static 'labs/img/keyboard2.png' %}" class="d-block w-100" alt="..." draggable="false">
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock carousel %}
+
+{% block content %}
+  <!-- 카테고리 -->
+  <div class="main-category">
+    <a href="{% url 'labs:intro' %}">
+      <div class="main-category-bg">
+        <img src="https://cdn-icons-png.flaticon.com/512/4696/4696759.png" class="main-category-img" style="margin-left: 20px;" alt="">
+      </div>
+      <p>인텔리랩스를 소개합니다</p>
+    </a>
+    <a href="{% url 'labs:rating' %}">
+      <div class="main-category-bg">
+        <img src="https://cdn-icons-png.flaticon.com/512/8101/8101448.png" class="main-category-img" alt="">
+      </div>
+      <p>인텔리랩스 등급</p>
+    </a>
+    <a href="{% url 'communities:index' %}">
+      <div class="main-category-bg">
+        <img src="https://cdn-icons-png.flaticon.com/512/3365/3365365.png" class="main-category-img" alt="">
+      </div>
+      <p>커뮤니티</p>
+    </a>
+    <a href="https://cafe.naver.com/coolnovo">
+      <div class="main-category-bg">
+        <img src="https://cdn-icons-png.flaticon.com/512/3375/3375341.png" class="main-category-img" id='hotDeal' alt="">
+      </div>
+      <p>특가정보</p>
+    </a>
+    <a href="http://keyboardwarriorbean-env.eba-uzmimep3.ap-northeast-2.elasticbeanstalk.com/">
+      <div class="main-category-bg">
+        <img src="https://cdn-icons-png.flaticon.com/512/1831/1831930.png" class="main-category-img" alt="">
+      </div>
+      <p>협력사</p>
+    </a>
+  </div>
+
+  <!-- 브랜드 카테고리 -->
+  <div class="brand-category">
+    <form action="{% url 'products:index' %}">
+      <button class="brand-category-logo fill" type="submit">
+        삼성
+        <input type="text" value="삼성" class="category-value" name="category">
+      </button>
+    </form>
+    <form action="{% url 'products:index' %}">
+      <button class="brand-category-logo fill" type="submit">
+        LG
+        <input type="text" value="LG전자" class="category-value" name="category">
+      </button>
+    </form>
+    <form action="{% url 'products:index' %}">
+      <button class="brand-category-logo fill" type="submit">
+        Apple
+        <input type="text" value="APPLE" class="category-value" name="category">
+      </button>
+    </form>
+    <form action="{% url 'products:index' %}">
+      <button class="brand-category-logo fill" type="submit">
+        Asus
+        <input type="text" value="ASUS" class="category-value" name="category">
+      </button>
+    </form>
+    <form action="{% url 'products:index' %}">
+      <button class="brand-category-logo fill" type="submit">
+        Lenovo
+        <input type="text" value="레노버" class="category-value" name="category">
+      </button>
+    </form>
+    <form action="{% url 'products:index' %}">
+      <button class="brand-category-logo fill" type="submit">
+        Msi
+        <input type="text" value="MSI" class="category-value" name="category">
+      </button>
+    </form>
+    <form action="{% url 'products:index' %}">
+      <button class="brand-category-logo fill" type="submit">
+        DELL
+        <input type="text" value="DELL" class="category-value" name="category">
+      </button>
+    </form>
+    <form action="{% url 'products:index' %}">
+      <button class="brand-category-logo fill" type="submit">
+        한성
+        <input type="text" value="한성" class="category-value" name="category">
+      </button>
+    </form>
+    <form action="{% url 'products:index' %}">
+      <button class="brand-category-logo fill" type="submit">
+        GigaByte
+        <input type="text" value="GIGABYTE" class="category-value" name="category">
+      </button>
+    </form>
+    <form action="{% url 'products:index' %}">
+      <button class="brand-category-logo fill" type="submit">
+        HP
+        <input type="text" value="HP" class="category-value" name="category">
+      </button>
+    </form>
+  </div>
+
+  <!-- 베스트랭킹 -->
+  <div class="best-ranking-box">
+    <div class='best-ranking'>
+      <div class="d-flex justify-content-between">
+        <h3>베스트랭킹</h3>
+        <img src="{% static 'labs/img/gold1.png'%}">
+      </div>
+      <div class="best-ten mt-3 justify-content-between">
+        {% for product_10 in products_10 %}
+          <a class="now" href="{% url 'products:detail' product_10.pk %}">
+            {{ forloop.counter }}
+            {{ product_10.모델명 }}
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="best-container" style="overflow: hidden;">
+      <div class="best-ranking-products" style="transform: translateX(0%);">
+        {% for product_10 in products_10 %}
+          <!-- 1등 제품 시작-->
+          <div class="best-ten-product">
+            <div class="card-bodys has_rank">
+              <div class="best-ranking-tag">best 1</div>
+              <div class="blind-container">
+                <div class="blind-container-down">
+                  <img src="{{ product_10.썸네일 }}" alt="" draggable="false" width="80%" height="80%">
+                </div>
+                <div class="img-blind">
+                  <h5 class="fs-6">{{ product_10.모델명 }}</h5>
+                </div>
+                <div class="what-to-do">
+                  {% if product_10.게임용 == True %}
+                    <span class="fs-6">게임용</span>
+                  {% endif %}
+                  {% if product_10.사무_인강용 == True %}
+                    <span class="fs-6">사무/인강용</span>
+                  {% endif %}
+                  {% if product_10.그래픽작업용 == True %}
+                    <span class="fs-6">그래픽작업용</span>
+                  {% endif %}
+                </div>
+                <div class="sale-price fw-bold">최저가
+                  {{ product_10.가격 | intcomma }}원</div>
+                <hr class="mb-4">
+                <a href="{% url 'products:detail' product_10.id %}" class="btn-color">구매하기</a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <!-- MD추천 아이템 -->
+  <div class="md-pick">
+    <p></p>
+    <h3>MD Pick</h3>
+  </div>
+  <div class="cards">
+    <!-- 호빈픽 -->
+    <div class="card hit-product">
+      <div class="card-body">
+        <div>
+          <img src="{% static 'labs/img/키보드.jpeg'%}" alt="" class="img-fluid region_img" style="width: 264.08px; height:154px;">
+          <h5 class="card-title text-center" style="height:48px;">Mistel 키보드</h5>
+          <h6 class="card-subtitle mb-2 text-muted text-center">MD770 RGB</h6>
+          <p class="card-text">
+            <div class="standard-price text-center">
+              <span class="text-center text-muted">최저가</span><span style="margin-left: 5px; color: black;">195,000</span>
+            </div>
+          </p>
+        </div>
+        <hr>
+        <div class="d-flex justify-content-center">
+          <a href="https://smartstore.naver.com/kuzza/products/4865163014?NaPm=ct%3Dlalah6nc%7Cci%3D49a8c75f80024744e49e0e00c40dcb3a0a5b2825%7Ctr%3Dsls%7Csn%3D159426%7Chk%3D2e972f68614ea415d4564f9de2a51439d1e1c709" class="btn-color">구매하기</a>
+        </div>
+      </div>
+    </div>
+    <!-- 창현픽 -->
+    <div class="card hit-product">
+      <div class="card-body">
+        <div>
+          <img src="{% static 'labs/img/리전5 프로.jpg'%}" alt="" class="img-fluid region_img" style="width: 264.08px; height:154px;">
+          <h5 class="card-title text-center">레노버 LEGION 5i Pro 16IAH7H I7 STORM 3060 32GB램</h5>
+          <h6 class="card-subtitle mb-2 text-muted text-center">82RG0081KR</h6>
+          <p class="card-text">
+            <div class="standard-price text-center">
+              <span class="text-center text-muted">최저가</span><span style="margin-left: 5px; color: black;">1,998,990</span>
+            </div>
+          </p>
+        </div>
+        <hr>
+        <div class="d-flex justify-content-center">
+          <a href="https://prod.danawa.com/info/?pcode=17705312&keyword=%EB%A0%88%EB%85%B8%EB%B2%84+%EB%A6%AC%EC%A0%845+%ED%94%84%EB%A1%9C&cate=112758" class="btn-color">구매하기</a>
+        </div>
+      </div>
+    </div>
+    <!-- 유영픽 -->
+    <div class="card hit-product">
+      <div class="card-body">
+        <div>
+          <img src="{% static 'labs/img/맥북에어.jpeg'%}" alt="" class="img-fluid region_img" style="width: 264.08px; height:154px;">
+          <h5 class="card-title text-center">APPLE 2022 맥북에어 MLY33KH/A (8core GPU, 8GB, SSD 256GB)</h5>
+          <h6 class="card-subtitle mb-2 text-muted text-center">MLY33KH/A</h6>
+          <p class="card-text">
+            <div class="standard-price text-center">
+              <span class="text-center text-muted">최저가</span><span style="margin-left: 5px; color: black;">1,421,900</span>
+            </div>
+          </p>
+        </div>
+        <hr>
+        <div class="d-flex justify-content-center">
+          <a href="https://prod.danawa.com/info/?pcode=17203826&cate=11236463#bookmark_price_compare" class="btn-color">구매하기</a>
+        </div>
+      </div>
+    </div>
+    <!-- 윤식픽 -->
+    <div class="card hit-product">
+      <div class="card-body">
+        <div>
+          <img src="{% static 'labs/img/yoonsik_pick.jpeg'%}" alt="" class="img-fluid region_img" style="width: 264.08px; height:154px;">
+          <h5 class="card-title text-center">
+            ASUS 젠북 프로 듀오 UX8402ZE-M3144W (SSD 1TB)
+          </h5>
+          <h6 class="card-subtitle mb-2 text-muted text-center">UX8402ZE-M3144W</h6>
+          <p class="card-text">
+            <div class="standard-price text-center">
+              <span class="text-center text-muted">최저가</span><span style="margin-left: 5px; color: black;">2,998,480</span>
+            </div>
+          </p>
+        </div>
+        <hr>
+        <div class="d-flex justify-content-center">
+          <a href="https://prod.danawa.com/info/?pcode=17402399&keyword=ASUS+%EC%A0%A0%EB%B6%81+%ED%94%84%EB%A1%9C+%EB%93%80%EC%98%A4&cate=112758" class="btn-color">구매하기</a>
+        </div>
+      </div>
+    </div>
+    <!-- 성인픽 -->
+    <div class="card hit-product">
+      <div class="card-body">
+        <div>
+          <img src="{% static 'labs/img/오디세이.jpg'%}" alt="" class="img-fluid region_img" style="width: 264.08px; height:154px;">
+          <h5 class="card-title text-center">삼성전자 오디세이 NT850XCR-HD7A 16GB램 (SSD 256GB)</h5>
+          <h6 class="card-subtitle mb-2 text-muted text-center">82RG0081KR</h6>
+          <p class="card-text">
+            <div class="standard-price text-center">
+              <span class="text-center text-muted">최저가</span><span style="margin-left: 5px; color: black;">1,298,990</span>
+            </div>
+          </p>
+        </div>
+        <hr>
+        <div class="d-flex justify-content-center">
+          <a href="https://prod.danawa.com/info/?pcode=12708482&keyword=%EC%82%BC%EC%84%B1+%EC%98%A4%EB%94%94%EC%84%B8%EC%9D%B4+%EB%85%B8%ED%8A%B8%EB%B6%81&cate=112758" class="btn-color">구매하기</a>
+        </div>
+      </div>
+    </div>
+    <!-- 서림픽 -->
+    <div class="card hit-product">
+      <div class="card-body">
+        <div>
+          <img src="{% static 'labs/img/서림픽.jpg'%}" alt="" class="img-fluid region_img" style="width: 264.08px; height:154px;">
+          <h5 class="card-title text-center">APPLE 2022 맥북에어 (8core GPU, 16GB, SSD 256GB)</h5>
+          <h6 class="card-subtitle mb-2 text-muted text-center">MLY33KH/A</h6>
+          <p class="card-text">
+            <div class="standard-price text-center">
+              <span class="text-center text-muted">최저가</span><span style="margin-left: 5px; color: black;">1,422,260</span>
+            </div>
+          </p>
+        </div>
+        <hr>
+        <div class="d-flex justify-content-center">
+          <a href="https://prod.danawa.com/info/?pcode=17773637&keyword=APPLE+2022+%EB%A7%A5%EB%B6%81%EC%97%90%EC%96%B4+%288core+GPU%2C+16GB%2C+SSD+256GB%29&cate=112758" class="btn-color">구매하기</a>
+        </div>
+      </div>
+    </div>
+    <!-- 카드7 한장 시작 -->
+    <div class="card hit-product">
+      <div class="card-body">
+        <div>
+          <img src="{% static 'labs/img/마사지건.jpg'%}" alt="" class="img-fluid region_img" style="width: 264.08px; height:154px;">
+          <h5 class="card-title text-center">Opove M3 Pro 2 마사지건  통증 완화</h5>
+          <h6 class="card-subtitle mb-2 text-muted text-center">Pro 2</h6>
+          <p class="card-text">
+            <div class="standard-price text-center">
+              <span class="text-center text-muted">최저가</span><span style="margin-left: 5px; color: black;">281,500</span>
+            </div>
+          </p>
+        </div>
+        <hr>
+        <div class="d-flex justify-content-center">
+          <a href="https://smartstore.naver.com/am-f/products/7334218785?NaPm=ct%3Dlaqkdgcw%7Cci%3D2e08a425765ba1d71037922a96ac1f1675be1f84%7Ctr%3Dimg%7Csn%3D6496435%7Chk%3D61e60ba9ddc978d173d244c013a02b17a0f6e9c3" class="btn-color">구매하기</a>
+        </div>
+      </div>
+    </div>
+    <!-- 카드8 한장 시작 -->
+    <div class="card hit-product">
+      <div class="card-body">
+        <div>
+          <img src="{% static 'labs/img/다이소모기채.jpg'%}" alt="" class="img-fluid region_img" style="width: 264.08px; height:154px;">
+          <h5 class="card-title text-center">[다이소]전기모기채(ABS)-1025159</h5>
+          <h6 class="card-subtitle mb-2 text-muted text-center">1025159</h6>
+          <p class="card-text">
+            <div class="standard-price text-center">
+              <span class="text-center text-muted">최저가</span><span style="margin-left: 5px; color: black;">5,000</span>
+            </div>
+          </p>
+        </div>
+        <hr>
+        <div class="d-flex justify-content-center">
+          <a href="https://bit.ly/3tJfTzg" class="btn-color">구매하기</a>
+        </div>
+      </div>
+    </div>
+    <!-- 카드8 한장 끝 -->
+  </div>
+
+{% endblock content %}
+
+<!-- 자바스크립트 -->
+{% block js %}
+  <script src="{% static 'labs/js/main.js' %}"></script>
+
+  <!-- 베스트랭킹 배지 -->
+  <script>
+    const bestItemArr = [
+      'red',
+      'orange',
+      'rgb(205, 205, 255)',
+      '#D3D3D3',
+      '#D3D3D3',
+      '#D3D3D3',
+      '#D3D3D3',
+      '#D3D3D3',
+      '#D3D3D3',
+      '#D3D3D3'
+    ]
+    const bestRankingTag = document.querySelectorAll('.best-ranking-tag')
+    window.addEventListener('load', () => {
+      for (let i = 0; i < bestRankingTag.length; i++) {
+        bestRankingTag[i].style.backgroundColor = `${bestItemArr[i]}`
+        bestRankingTag[i].innerHTML = `best ${i + 1}`
+      }
+    })
+  </script>
+
+  <!-- 캐러셀 -->
+  <script>
+    var mouseMove = 0;
+    var start = 0
+    var clicking = false
+    var next = 0;
+    const bestRankingProducts = document.querySelector('.best-ranking-products')
+
+    bestRankingProducts.addEventListener('mousedown', (e) => {
+      // e.clientX : 현재 마우스위치의 x좌표
+      start = e.clientX
+      clicking = true;
+    })
+    bestRankingProducts.addEventListener('mousemove', (e) => {
+      // e.clientX : 현재 마우스위치의 x좌표
+      if (clicking == true) {
+        mouseMove = next + e.clientX - start
+        bestRankingProducts.style.transition = ``
+        if (mouseMove <= 0 && mouseMove > -1800) {
+          bestRankingProducts.style.transform = `translateX(${mouseMove}px)`
+        }
+        if (mouseMove > 0) {
+          mouseMove = 0
+        }
+        if (mouseMove < -1800) {
+          bestRankingProducts.style.transform = `translateX(-1700px)`
+          bestRankingProducts.style.transition = `all 0.5s`
+          mouseMove = -1700
+        }
+      }
+    })
+    bestRankingProducts.addEventListener('mouseleave', () => {
+      clicking = false;
+    })
+    bestRankingProducts.addEventListener('mouseup', (e) => {
+      clicking = false
+      next = mouseMove
+    })
+  </script>
+{% endblock js %}

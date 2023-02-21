@@ -1,0 +1,823 @@
+{% extends 'base1.html' %}
+{% load django_bootstrap5 %}
+{% load humanize %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'products/css/product.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'products/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'products/css/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/css/ionicons.min.css">
+    <link rel="stylesheet" href="{% static 'products/css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'products/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'products/css/detail.css' %}">
+
+{% endblock css %}
+
+{% block content %}
+  {% if messages %}  
+  <div class="messages container" style="background-color: #d5caff;">
+    {% for message in messages %}
+    <div class="d-flex alert {{ message.tags }} alert-auto-dismissible alert-dismissible notification-container text-center" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      {{ message }}
+    </div>
+    {% endfor %}
+  </div>    
+  {% endif %}
+  <!--경로-->
+  <div class="pg-location">
+    <div class="pg-location-inner d-flex justify-content-start; mt-3">
+      <a href="{% url 'labs:main' %}" class="ml-3 mr-2" style="text-decoration:none; color:gray; font-size: 15px;">HOME
+        <i class="bi bi-chevron-right"></i>
+      </a>
+      <form action="{% url 'products:index' %}">
+        <button type="submit" class="cate_btn">
+          <p>{{ product.제조회사 }}</p>
+          <input type="text" value={{ product.제조회사 }} class="category-value" name="category">
+        </button>
+        <i class="bi bi-chevron-right"></i>
+      </form>
+      <span id="location-prd-nm" class="ml-2" style="color:gray; font-size: 15px;">
+        갤럭시 북2 Pro 360 39.6 cm Core™ i7 / 1 TB NVMe SSD
+      </span>
+    </div>
+  </div>
+
+  <div class="container" style="background-color: #f7f7f7; margin-top: 70px;">
+    <div class="row">
+      <div class="col-md-7 pr-0">
+        <!--캐러셀-->
+        <section class="ftco-section">
+          <div class="slider-hero">
+            <div class="featured-carousel owl-carousel">
+              <div class="item">
+                <div class="work">
+                  <div class="img d-flex align-items-center justify-content-center" style="background-image: url({{image1}});">
+                    <div class="text text-center">
+                      <!-- <h2>인텔리랩스</h2> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="work">
+                  <div class="img d-flex align-items-center justify-content-center" style="background-image: url({{image2}});">
+                    <div class="text text-center"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="work">
+                  <div class="img d-flex align-items-center justify-content-center" style="background-image: url({{image3}});">
+                    <div class="text text-center"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="my-5 text-center">
+              <ul class="thumbnail">
+                <li class="active img">
+                  <a href="#"><img src="{{image1}}" alt="Image" class="img-fluid"></a>
+                </li>
+                <li>
+                  <a href="#"><img src="{{image2}}" alt="Image" class="img-fluid"></a>
+                </li>
+                <li>
+                  <a href="#"><img src="{{image3}}" alt="Image" class="img-fluid"></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+        </section>
+      </div>
+      <!--구매 정보-->
+      <div class="col-md-5 p-0">
+        <div class="itm-information">
+          <div class="itm-info-head">
+            <div class="item-flag">
+              <span class="flag-tag">트레이드인</span>
+            </div>
+            <div class="social-box">
+              <button type="button" class="btn-sns-link">
+                <a id="kakaotalk-sharing-btn" href="javascript:;">
+                  <i class="icon ico-large ico-share">소셜공유</i>
+                </a>
+
+              </button>
+              <button type="button" class="btn-good on" title="선택됨">
+                {% if request.user.is_authenticated %}
+                  {% if request.user in product.like_product.all %}
+                    <i id="attention" data-product-id="{{ product.pk }}" class="icon-heart bi bi-heart-fill" ></i>
+                  {% else %}
+                    <i id="attention" data-product-id="{{ product.pk }}" class="icon-heart bi bi-heart"></i>
+                  {% endif %}
+                {% else %}
+                  <!-- 수정 필요 11/15-->
+                  <div>
+                    <a href="{% url 'accounts:login' %}">
+                      <i class="icon-heart bi bi-heart"></i>
+                    </a>
+                  </div>
+                {% endif %}
+              </button>
+            </div>
+            <h1 class="itm-info-title mt-4" id="goodsDetailNm">{{modelName}}</h1>
+            <!--<div class="itm-sku b2c-itm-sku">NT950QED-KD72S</div>-->
+            <div class="itm-rating-con">
+              <div class="itm-rating b2c-itm-rating">
+                <div class="itm-sart-rating">
+                  <i id="rating1" class=""></i>
+                  <i id="rating2" class=""></i>
+                  <i id="rating3" class=""></i>
+                  <i id="rating4" class=""></i>
+                  <i id="rating5" class=""></i>
+                  <span>{{product_grade}}</span>
+                  <a href="javascript:;" class="itm-review-count" title="상품평 보러가기">{{lenReviews}}건</a>
+                </div>
+              </div>
+              <div class="itm-rating itm-review">
+                <span class="itm-review-write">
+                  <a href="{% url 'products:review_create' product.pk %}" class="btn-underline" title="상품평 쓰기 바로가기">상품평 쓰기</a>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="itm-price">
+            <div>
+              <input type="hidden" id="originalPrice" value="3070000">
+              <dl class="has_strike">
+                <dt>정가</dt>
+                <dd>
+                  <span data-price="3070000">{{price | intcomma}}</span>
+                  원
+                </dd>
+              </dl>
+              <input type="hidden" id="lastPrice" value="2191000">
+              <dl class="event-price">
+                <dt>
+                  특가</dt>
+                <dd>
+                  <span data-price="2191000" class="pd-total-price">{{special_price | intcomma}}</span>
+                  원
+                </dd>
+              </dl>
+              <script type="text/javascript">
+                if ('2191000' == 0) {
+                  $(".itm-price").hide();
+                }
+              </script>
+            </div>
+          </div>
+          <div class="itm-option-choice droptoggle">
+            <!-- <dl>
+              <dt>
+                <span>색상</span>
+              </dt>
+              <dd>
+                <div class="dropOption" id="dropOption-2001043-1">
+                  <span class="itm-color-object" style="background-color: #c0c0c0;" data-omni="color_실버">실버</span>
+                  <span class="selectedOption">실버</span>
+                </div>
+              </dd>
+            </dl> -->
+            <dl class="count-show-box">
+              <dt>수량</dt>
+              <dd>
+                <div class="spinner-box pd-spinner goods-count">
+                  <!-- <a href="javascript:void(0);" class="count count-miner" type="button" id="pd-goods-count-miner" onclick='count("minus")' value="-">감소</a> -->
+                  <input type="button" onclick='count("minus")' value="-" class="count count-miner btn btns">
+                  <label for="countPrd" class="blind">구매수량</label>
+                  <input id='result' class="number" type="text" value="1">
+                  <!-- <input type="text" class="number count-prd" id="countPrd" value="1" data-max-qty="22" data-min-ord-qty> -->
+                  <input type="button" onclick='count("plus")' value="+" class="count count-plus btn btns">
+                  <!-- <a href="javascript:void(0);" class="count count-plus" type="button" id="pd-goods-count-plus" onclick='count("plus")' value="+">증가</a> -->
+                </div>
+              </dd>
+            </dl>
+          </div>
+          <hr>
+          <div class="itm-total-bottom">
+            <div class="box-btn">
+              <div class="box-cto">
+                <ul>
+                  <li>
+                    <button id="btnCart" type="button" class="btn btn-l btn-type6">
+                      <a href="{% url 'cart:add_cart' product.id %}" style="text-decoration: none; color:black;">장바구니</a>
+                    </button>
+                  </li>
+                  <li>
+                    <form id="purchase" data-product-id="{{product.pk}}">
+                        {% csrf_token %}
+                        <button id="btnCart" type="submit" class="btn btn-k btn-type2 ms-3 px-3">바로구매</button>
+                    </form>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+<!-- 스펙 -->
+<div class="b_tit">
+  <h3 class="txt">상품 상세정보</h3>
+</div>
+<div class="detail_cont">
+  <div class="prod_spec">
+    <table class="spec_tbl">
+      <tbody>
+        <tr>
+          <th scope="row" class="tit">제조회사</th>
+            <td class="dsc"><a class="maker_link">{{ product.제조회사 }}</a></td>
+          <th scope="row" class="tit">등록년월</th>
+            <td class="dsc">{{ product.등록년월 }}</td>
+        </tr>
+        <tr>								
+          <th scope="row" class="tit"><a>운영체제(OS)</a></th>
+            <td class="dsc"><a>{{ product.운영체제 }}</a></td>
+          <th scope="row" class="tit"></th>
+            <td class="dsc"></td>
+        </tr>												
+        <tr>
+          <th scope="row" colspan="4">용도</th>
+        </tr>
+        <tr>
+          <th scope="row" class="tit"><a>사무/인강용</a></th>
+            <td class="dsc">{{ product.사무_인강용 }}</td>
+          <th scope="row" class="tit"><a>휴대용</a></th>
+            <td class="dsc">{{ product.휴대용 }}</td>
+        </tr>
+        <tr>    
+          <th scope="row" class="tit"><a>게임용</a></th>
+            <td class="dsc">{{ product.게임용 }}</td>
+          <th scope="row" class="tit"><a>그래픽작업용</a></th>
+            <td class="dsc">{{ product.그래픽작업용 }}</td>
+        </tr>													
+        <tr>
+          <th scope="row" colspan="4">화면정보</th>
+        </tr>
+        <tr>
+          <th scope="row" class="tit"><a>화면 크기</a></th>
+            <td class="dsc"><a>{{ product.화면크기 }}</a></td>
+          <th scope="row" class="tit"><a>화면 크기대</a></th>
+            <td class="dsc"><a>{{ product.화면크기대 }}</a></td>
+        </tr>
+        <tr>
+          <th scope="row" class="tit"><a>화면 비율</a></th>
+            <td class="dsc"><a>{{ product.화면비율 }}</a></td>
+          <th scope="row" class="tit"><a>해상도</a></th>
+            <td class="dsc"><a>{{ product.해상도 }}</a></td>
+        </tr>													
+        <tr>								
+          <th scope="row" class="tit"><a>화면 밝기</a></th>
+            <td class="dsc"><a>{{ product.화면밝기}}</a></td>
+          <th scope="row" class="tit"><a>DCI-P3</a></th>
+            <td class="dsc"><a>{{ product.DCI_P3 }}</a></td>
+        </tr>													
+        <tr>
+          <th scope="row" class="tit"><a>패널 표면 처리</a></th>
+            <td class="dsc"><a>{{ product.패널표현저리 }}</a></td>								
+          <th scope="row" class="tit"><a>패널 종류</a></th>
+            <td class="dsc"><a>{{ product.패널종류 }}</a></td>
+        </tr>													
+        <tr>
+          <th scope="row" colspan="4">디스플레이 특징</th>
+        </tr>
+        <tr>								
+          <th scope="row" class="tit"><a>광시야각</a></th>
+            <td class="dsc">{{ product.광시야각 }}</td>
+          <th scope="row" class="tit"><a>슬림형 베젤</a></th>
+            <td class="dsc">{{ product.슬림형베젤 }}</td>
+        </tr>												
+        <tr>
+          <th scope="row" colspan="4">프로세서</th>
+        </tr>
+        <tr>								
+          <th scope="row" class="tit"><a>CPU 제조사</a></th>
+            <td class="dsc"><a>{{ product.CPU제조사 }}</a></td>
+          <th scope="row" class="tit"><a>CPU 종류</a></th>
+            <td class="dsc"><a>{{ product.CPU종류 }}</a></td>
+        </tr>												
+        <tr>								
+          <th scope="row" class="tit"><a>CPU 코드명</a></th>
+            <td class="dsc"><a>{{ product.CPU코드명 }}</a></td>
+          <th scope="row" class="tit"><a>CPU 넘버</a></th>
+            <td class="dsc"><a>{{ product.CPU넘버 }}</a></td>
+        </tr>													
+        <tr>								
+          <th scope="row" class="tit"><a>코어 수</a></th>
+            <td class="dsc"><a>{{ product.코어수 }}</a></td>
+          <th scope="row" class="tit"><a>스레드 수</a></th>
+            <td class="dsc"><a>{{ product.스레드수 }}</a></td>
+        </tr>													
+        <tr>
+          <th scope="row" colspan="4">메모리</th>
+        </tr>
+        <tr>								
+          <th scope="row" class="tit"><a>메모리 타입</a></th>
+            <td class="dsc"><a>{{ product.메모리타입 }}</a></td>
+          <th scope="row" class="tit"><a>메모리 용량</a></th>
+            <td class="dsc"><a>{{ product.메모리용량 }}</a></td>
+        </tr>													
+        <tr>								
+          <th scope="row" class="tit"><a>메모리 대역폭</a></th>
+            <td class="dsc"><a>{{ product.메모리대역폭 }}</a></td>
+          <th scope="row" class="tit">메모리 교체</th>
+            <td class="dsc"><a>{{ product.메모리교체 }}</a></td>
+        </tr>
+        <tr>
+          <th scope="row" class="tit"><a>메모리 슬롯</a></th>
+            <td class="dsc"><a>{{ product.메모리슬롯 }}</a></td>
+          <th scope="row" class="tit"><a>메모리 최대용량</a></th>
+            <td class="dsc"><a>{{ product.메모리최대용량 }}</a></td>
+        </tr>	
+        <tr>
+          <th scope="row" class="tit"><a>메모리 구성</a></th>
+            <td class="dsc"><a>{{ product.메모리구성 }}</a></td>
+          <th scope="row" class="tit"><a></a></th>
+            <td class="dsc"></td>
+        </tr>		
+        <tr>
+          <th scope="row" colspan="4">저장장치</th>
+        </tr>
+        <tr>								
+          <th scope="row" class="tit"><a>저장장치 종류</a></th>
+            <td class="dsc"><a>{{ product.저장장치종류 }}</a></td>
+          <th scope="row" class="tit"><a>저장 용량</a></th>
+            <td class="dsc"><a>{{ product.저장용량 }}</a></td>
+        </tr>													
+        <tr>							
+          <th scope="row" class="tit"><a>저장 슬롯</a></th>
+            <td class="dsc"><a>{{ product.저장슬롯 }}</a></td>
+          <th scope="row" class="tit"></th>
+            <td class="dsc"></td>
+        </tr>													
+        <tr>
+          <th scope="row" colspan="4">그래픽</th>
+        </tr>
+        <tr>								
+          <th scope="row" class="tit">GPU 종류</th>
+            <td class="dsc">{{ product.GPU종류 }}</td>
+          <th scope="row" class="tit"><a>GPU 제조사</a></th>
+            <td class="dsc"><a>{{ product.GPU제조사 }}</a></td>
+        </tr>													
+        <tr>								
+          <th scope="row" class="tit">GPU 칩셋</th>
+            <td class="dsc">{{ product.GPU칩셋 }}</td>
+          <th scope="row" class="tit"></th>
+            <td class="dsc"></td>
+        </tr>													
+        <tr>
+          <th scope="row" colspan="4">네트워크</th>
+        </tr>
+        <tr>								
+          <th scope="row" class="tit">무선랜</th>
+            <td class="dsc">{{ product.무선랜 }}</td>
+          <th scope="row" class="tit">유선랜</th>
+            <td class="dsc">{{ product.유선랜 }}</td>
+        </tr>
+        <tr>
+          <th scope="row" class="tit"><a>블루투스</a></th>
+            <td class="dsc"><a>{{ product.블루투스 }}</a></td>
+          <th scope="row" class="tit"><a></a></th>
+            <td class="dsc"></td>
+        </tr>													
+        <tr>
+          <th scope="row" colspan="4">영상 입출력</th>
+        </tr>
+        <tr>								
+          <th scope="row" class="tit"><a>HDMI</a></th>
+            <td class="dsc">{{ product.HDMI }}</td>
+          <th scope="row" class="tit"><a>웹캠(FHD)</a></th>
+            <td class="dsc">{{ product.웹캡 }}</td>
+        </tr>	
+        <tr>
+          <th scope="row" class="tit"><a>웹캠OFF 지원</a></th>
+            <td class="dsc">{{ product.웹캠OFF지원 }}</td>
+          <th scope="row" class="tit"><a></a></th>
+            <td class="dsc"></td>
+        </tr>												
+        <tr>
+          <th scope="row" colspan="4">단자</th>
+        </tr>
+        <tr>								
+          <th scope="row" class="tit"><a>USB</a></th>
+            <td class="dsc"><a>{{ product.USB }}</a></td>
+          <th scope="row" class="tit"><a>썬더볼트3</a></th>
+            <td class="dsc"><a>{{ product.썬더볼트3 }}</a></td>
+        </tr>	
+        <tr>								
+          <th scope="row" class="tit"><a>썬더볼트4</a></th>
+            <td class="dsc"><a>{{ product.썬더볼트4 }}</a></td>
+          <th scope="row" class="tit"><a>USB-C</a></th>
+            <td class="dsc"><a>MicroSD카드</a></td>
+        </tr>													
+        <tr>								
+          <th scope="row" class="tit">USB-A</th>
+            <td class="dsc">{{ product.USB_A }}</td>
+          <th scope="row" class="tit"></th>
+            <td class="dsc"></td>
+        </tr>																										
+        <tr>
+          <th scope="row" colspan="4">카드 슬롯</th>
+        </tr>
+        <tr>								
+          <th scope="row" class="tit">MicroSD카드</th>
+            <td class="dsc">{{ product.MicroSD카드 }}</td>
+          <th scope="row" class="tit"></th>
+            <td class="dsc"></td>
+        </tr>													
+        <tr>
+          <th scope="row" colspan="4">보안 기능</th>
+        </tr>
+        <tr>								
+          <th scope="row" class="tit"><a>얼굴 인식</a></th>
+            <td class="dsc">{{ product.얼굴인식 }}</td>
+          <th scope="row" class="tit">지문 인식</th>
+            <td class="dsc">{{ product.지문인식 }}</td>
+        </tr>													
+        <tr>
+          <th scope="row" colspan="4">편의 기능</th>
+        </tr>
+        <tr>								
+          <th scope="row" class="tit"><a>키보드 라이트</a></th>
+            <td class="dsc">{{ product.키보드라이트 }}</td>
+          <th scope="row" class="tit">침수지연키보드</th>
+            <td class="dsc">{{ product.침수지연키보드 }}</td>
+        </tr>
+        <tr>								
+          <th scope="row" class="tit"><a>터치스크린</a></th>
+            <td class="dsc">{{ product.터치스크린 }}</td>
+          <th scope="row" class="tit"><a>트루론</a></th>
+            <td class="dsc">{{ product.트루론 }}</td>
+        </tr>	
+        <tr>								
+          <th scope="row" class="tit"><a>전용펜지원</a></th>
+            <td class="dsc">{{ product.전용펜지원 }}</td>
+          <th scope="row" class="tit">리프트힌지</th>
+            <td class="dsc">{{ product.리프트힌지 }}</td>
+        </tr>														
+        <tr>
+          <th scope="row" colspan="4">키보드 배열</th>
+        </tr>
+        <tr>								
+          <th scope="row" class="tit"><a>숫자키패드</a></th>
+            <td class="dsc">{{ product.숫자키패트 }}</td>
+          <th scope="row" class="tit"><a></a></th>
+            <td class="dsc"></td>
+        </tr>													
+        <tr>
+          <th scope="row" colspan="4">파워</th>
+        </tr>
+        <tr>								
+          <th scope="row" class="tit"><a>배터리</a></th>
+            <td class="dsc"><a>{{ product.배터리 }}</a></td>
+          <th scope="row" class="tit"><a>어댑터</a></th>
+            <td class="dsc"><a>{{ product.어댑터 }}</a></td>
+        </tr>													
+        <tr>								
+          <th scope="row" class="tit"><a>충전단자</a></th>
+            <td class="dsc"><a>{{ product.충전단자 }}</a></td>
+          <th scope="row" class="tit"></th>
+            <td class="dsc"></td>
+        </tr>													
+        <tr>
+          <th scope="row" colspan="4">주요제원</th>
+        </tr>
+        <tr>								
+          <th scope="row" class="tit"><a>두께</a></th>
+            <td class="dsc"><a>{{ product.두께 }}</a></td>
+          <th scope="row" class="tit"><a>무게</a></th>
+            <td class="dsc"><a>{{ product.무게 }}</a></td>
+        </tr>										
+        <tr>
+          <th scope="row" colspan="4"><span class="ico_kc">KC</span>인증</th>
+        </tr>
+        <tr>
+          <th scope="row" class="tit">적합성평가인증</th>
+            <td class="dsc" colspan="3">{{ product.적합성평가인증 }} <a class="btn_certi">인증번호 확인</a></td>
+        </tr>
+        <tr>
+          <th scope="row" class="tit">안전확인인증</th>
+            <td class="dsc" colspan="3">{{ product.안전확인인증 }} <a class="btn_certi">인증번호 확인</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- 리뷰 -->
+<!-- 리뷰창 -->
+  <!-- 개인 리뷰 -->
+  <div class="b_txt">
+  <h3 class="txt_t">상품 리뷰</h3>
+  <div>
+  <hr>
+  <div class="review_border">
+    {% for review in reviews %}
+        <div class="d-flex my-2">
+            <div>
+                {% if review.user.image %}
+                <img src="{{ review.user.image.url }}" alt="프로필 사진" style="width: 25px; height: 25px; border-radius: 500px">
+                {% else %}
+                <img src="https://www.dummyimage.com/600x400/000/fff" alt="후기 이미지" style="width: 25px; height: 25px; border-radius: 500px">
+                {% endif %}
+            </div>
+              <div class="mx-2" style="width: 100%;">
+                  <div class="d-flex">
+                    <div class="review-user">
+                        {{review.user.username}} |
+                    </div>
+                    <div class="mx-2">
+                      평점: {{ review.grade }}
+                    </div>
+                </div>
+                  <div id="review-content-{{review.pk}}" class="re-text">{{review.content}}</div>
+                  <div id="review-form-{{review.pk}}" class="hidden">
+                    <form action="{% url 'products:update' product.pk review.pk %}" method="POST" >
+                        {% csrf_token %}
+                        {{ review_form }}
+                          <input type="submit" class="btn btn-sm" style="color: #9f87f8;" value="수정하기">
+                    </form>
+                </div>
+                  <div class="d-flex justify-content-between">
+                      <div class="d-flex">
+                        {% if request.user.is_authenticated %}
+                            {% if request.user in review.like.all %}
+                            <i data-review-id="{{ review.pk }}" data-product-id="{{ product.pk }}" class="review-like icon-heart bi bi-heart-fill" ></i>
+                            {% else %}
+                            <i data-review-id="{{ review.pk }}" data-product-id="{{ product.pk }}" class="review-like icon-heart bi bi-heart"></i>
+                            {% endif %}
+                        {% else %}
+                        <a href="{% url 'accounts:login' %}">
+                            <i class="icon-heart bi bi-heart"></i>
+                        </a>
+                        {% endif %}
+                        <div id="likeReviewCount{{review.pk}}" class="mx-2">{{ review.like.count }}</div>
+                    </div>
+
+                    <div class="d-flex">
+                      <div class="p-1 m-1">
+                        {% if review.created_string == False %}
+                            <td>
+                                {{ review.registered_date|date:'m월 d일' }}
+                            </td>
+                        {% else %}
+                            <td>
+                                {{ review.created_string }}
+                            </td>
+                        {% endif %}
+                      </div>
+                        <!-- 수정 삭제 버튼 아직 미 완성 -->
+                        {% if request.user.pk == review.user.pk %}
+                            <button type="button" class="review-update" data-product-id="{{ product.pk }}" data-review-id="{{ review.pk }}">수정</button>
+                            <form class="review-delete" data-product-id="{{ product.pk }}" data-review-id="{{ review.pk }}">
+                                {% csrf_token %}
+                                <button type="submit" class="review-dele p-1 m-1">삭제</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+              </div>
+        </div>
+        
+        {% empty %}
+          <p class="review_t text-center">아직 리뷰가 없습니다. 리뷰를 남겨
+            <b>{{ restaurant.restaurant_name }}</b>의 첫번째 리뷰를 남겨보세요.
+          </p>
+      {% endfor %}
+    </div>
+  </div>
+<hr>
+{% comment %} 아래 자동 정렬 멈추기용 {% endcomment %}
+{% endblock content %}
+
+{% block js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="{% static 'products/js/product.js' %}"></script>
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/popper.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/owl.carousel.min.js"></script>
+<script src="/static/js/main.js"></script>
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.0.1/kakao.min.js" integrity="sha384-eKjgHJ9+vwU/FCSUG3nV1RKFolUXLsc6nLQ2R1tD0t4YFPCvRmkcF8saIfOZNWf/" crossorigin="anonymous"></script>
+<script>
+Kakao.init(`{{ KAKAO_KEY }}`); // 사용하려는 앱의 JavaScript 키 입력
+</script>
+<script>
+Kakao
+.Share
+.createDefaultButton({
+container: '#kakaotalk-sharing-btn',
+objectType: 'commerce',
+content: {
+    title: '',
+    imageUrl: `{{thumbnail}}`,
+    link: {
+    // [내 애플리케이션] > [플랫폼] 에서 등록한 사이트 도메인과 일치해야 함
+    mobileWebUrl: 'https://developers.kakao.com',
+    webUrl: 'https://developers.kakao.com'
+    }
+},
+commerce: {
+    productName: `{{ modelName }}`,
+    regularPrice: {{price}},
+    discountRate: 10,
+    discountPrice: {{special_price}}
+},
+buttons: [
+    {
+    title: '구매하기',
+    link: {
+        mobileWebUrl: `http://intellilabs-env.eba-cynacmth.ap-northeast-2.elasticbeanstalk.com/products/detail/{{product.pk}}`,
+        webUrl: `http://intellilabs-env.eba-cynacmth.ap-northeast-2.elasticbeanstalk.com/products/detail/{{product.pk}}`
+    }
+    }, {
+    title: '공유하기',
+    link: {
+        mobileWebUrl: `http://intellilabs-env.eba-cynacmth.ap-northeast-2.elasticbeanstalk.com/products/detail/{{product.pk}}`,
+        webUrl: `http://intellilabs-env.eba-cynacmth.ap-northeast-2.elasticbeanstalk.com/products/detail/{{product.pk}}`
+    }
+    }
+]
+});
+</script>
+<script>
+  // 평점
+    const drawStar = (target) => {
+        document.querySelector(`.star span`).style.width = `${target.value * 10}%`;
+    }
+    const rating1 = document.querySelector("#rating1")
+    const rating2 = document.querySelector("#rating2")
+    const rating3 = document.querySelector("#rating3")
+    const rating4 = document.querySelector("#rating4")
+    const rating5 = document.querySelector("#rating5")
+    const num = {{product_grade}}
+    var n = 0;
+    if (num >= 1){
+        rating1.classList.add('bi-heart-fill')
+    } else {
+        if (num >= 0.5) {
+            rating1.classList.add('bi-heart-half')
+        } else {
+            rating1.classList.add('bi-heart')
+        }
+    }
+    if (num >= 2){
+        rating2.classList.add('bi-heart-fill')
+    } else {
+        if (num >= 1.5) {
+            rating2.classList.add('bi-heart-half')
+        } else {
+            rating2.classList.add('bi-heart')
+        }
+    }
+    if (num >= 3){
+        rating3.classList.add('bi-heart-fill')
+    } else {
+        if (num >= 2.5) {
+            rating3.classList.add('bi-heart-half')
+        } else {
+            rating3.classList.add('bi-heart')
+        }
+    }
+    if (num >= 4){
+        rating4.classList.add('bi-heart-fill')
+    } else {
+        if (num >= 3.5) {
+            rating4.classList.add('bi-heart-half')
+        } else {
+            rating4.classList.add('bi-heart')
+        }
+    }
+    if (num == 5){
+        rating5.classList.add('bi-heart-fill')
+    } else {
+        if (num >= 4.5) {
+            rating5.classList.add('bi-heart-half')
+        } else {
+            rating5.classList.add('bi-heart')
+        }
+    }
+</script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+  //제품 좋아요
+    const attention = document.querySelector("#attention")
+    attention.addEventListener("click", function (event) {
+    const productId = event.target.dataset.productId;
+    event.preventDefault()
+    axios({method: "get", url: `/products/like/${productId}`})
+    .then(response => {
+        if (response.data.isLiked === true) {
+            event.target.classList.add('bi-heart-fill')
+            event.target.classList.remove('bi-heart')
+        } else {
+            event.target.classList.add('bi-heart')
+            event.target.classList.remove('bi-heart-fill')
+        }
+    })
+    })
+</script>
+<script>
+  //리뷰 좋아요
+    const reviewLike = document.querySelector(".review-like")
+    reviewLike.addEventListener("click", function (event) {
+        const productId = event.target.dataset.productId;
+        const reviewId = event.target.dataset.reviewId;
+        event.preventDefault()
+        axios({method: "get", url: `/products/like_reviews/${productId}/${reviewId}`})
+        .then(response => {
+            if (response.data.isLiked === true) {
+                event.target.classList.add('bi-heart-fill')
+                event.target.classList.remove('bi-heart')
+            } else {
+                event.target.classList.add('bi-heart')
+                event.target.classList.remove('bi-heart-fill')
+            }
+            const likeReviewCount = document.querySelector(`#likeReviewCount${reviewId}`)
+            likeReviewCount.innerText = response.data.likeReviewCount
+        })
+    })
+</script>
+<script>
+    // 리뷰 삭제
+    const reviewDelete = document.querySelector(".review-delete")
+    reviewDelete.addEventListener("submit", function (event) {
+    const productId = event.target.dataset.productId;
+    const reviewId = event.target.dataset.reviewId;
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    event.preventDefault()
+    axios(
+        {
+            method: "post", 
+            url: `/products/detail/${productId}/${reviewId}/delete`,
+            headers: {
+                'X-CSRFToken': csrftoken
+            },
+        }
+    )
+    .then(response => {
+        reviewDelete.parentNode.parentNode.parentNode.parentNode.innerHTML = ""
+        })
+    })
+</script>
+<script>
+    // 리뷰 수정
+    const reviewUpdate = document.querySelector(".review-update")
+    reviewUpdate.addEventListener("click", function (event) {
+        const productId = event.target.dataset.productId;
+        const reviewId = event.target.dataset.reviewId;
+        event.preventDefault()
+        axios(
+            {
+                method: "get", 
+                url: `/products/detail/${productId}/${reviewId}/update`,
+            }
+        )
+        .then(response => {
+            const reviewContent = document.querySelector(`#review-content-${reviewId}`)
+            const reviewForm = document.querySelector(`#review-form-${reviewId}`)
+            reviewContent.classList.toggle("hidden")
+            reviewForm.classList.toggle("hidden")
+            })
+        })
+</script>
+{% comment %} <script>
+    const purchase = document.querySelector("#purchase")
+    const result = document.querySelector("#result")
+    purchase.addEventListener("submit", function (event) {
+        const productId = event.target.dataset.productId;
+        const quantity = Number(result.innerText)
+        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        event.preventDefault()
+        axios(
+            {
+                method: "post", 
+                url: `/products/purchase/${productId}/${quantity}`,
+                headers: {
+                    'X-CSRFToken': csrftoken
+                },
+            }
+        )
+        .then(response => {
+            console.log(123)
+            })
+        })
+</script> {% endcomment %}
+{% endblock js %}

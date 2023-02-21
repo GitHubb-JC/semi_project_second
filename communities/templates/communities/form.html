@@ -1,0 +1,43 @@
+{% extends 'base1.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+{% block css %}
+  <link rel="stylesheet" href="{% static 'communities/css/form.css' %}">
+{% endblock css %}
+{% block content %}
+
+  {% if request.resolver_match.url_name == 'article_create' %}
+    <h1>
+      글쓰기
+    </h1>
+  {% elif request.resolver_match.url_name == 'notion_create' %}
+    <h1>
+      공지 쓰기
+    </h1>
+  {% else %}
+    <h1>
+      수정하기
+    </h1>
+  {% endif %}
+
+  <form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form articleForm %}
+
+    {{ formset.management_form }}
+    <div class="d-flex">
+      {% for form in formset %}
+      <div class="review_img me-3">
+        {{ form }}
+          <img src="https://cdn-icons-png.flaticon.com/512/3524/3524388.png" alt="사진 첨부">
+      </div>
+        {% endfor %}
+      </div>
+        <div class="review_buttons m-2">
+          <button type="submit" class="comfirm" value="작성">작성</button>
+        </div>
+      </form>
+
+   
+
+  {% endblock content %}
